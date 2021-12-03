@@ -36,15 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
     // ['Yanu', "Selamat menikah"],
     // ['Yuni', "Selamat berbahagia!"],
     // ['Ani', "Selamat Menikah"],
-    // [
-    //   'Bayu',
-    //   "Selamat Menikah. Selamat Menjalankan Kehidupan Baru dan sehat selalu"
-    // ],
+    [
+      'Bayu',
+      "Selamat Menikah. Selamat Menjalankan Kehidupan Baru dan sehat selalu"
+    ],
     // ['Deni', "Selamat berbahagia!!!"],
     // ['Rina', "Selamat Menempuh Hidup Baru"],
     // ['Okta', "Met nikaah"],
     // ['Yanu', "Selamat menikah"],
-    // ['Yuni', "Selamat berbahagia!"],
+    ['Yuni', "Selamat berbahagia!"],
   ];
 
   void addUcapan(String name, String msg) {
