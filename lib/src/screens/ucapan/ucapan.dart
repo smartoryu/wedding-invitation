@@ -47,6 +47,7 @@ class UcapanScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
                   child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
                     reverse: true,
                     itemCount: ucapan?.length ?? 0,
