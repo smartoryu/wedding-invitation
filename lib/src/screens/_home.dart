@@ -146,11 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     controller: _pageController,
                     scrollDirection: Axis.vertical,
                     children: [
-                      const InfoMempelaiScreen(),
-                      // const QuoteScreen(),
-                      Jadwal1Screen(onWillPop: onWillPop),
-                      // Jadwal2Screen(onWillPop: onWillPop),
-                      const PenutupScreen(),
+                      InfoMempelaiScreen(onWillPop: onWillPop),
+                      JadwalScreen(onWillPop: onWillPop),
+                      PenutupScreen(onWillPop: onWillPop),
                       UcapanScreen(
                         ucapan: ucapan.reversed.toList(),
                         conName: conName,
@@ -162,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 resetInput();
                                 FocusScope.of(context).unfocus();
                               },
+                        onWillPop: onWillPop,
                       ),
                     ],
                   ),

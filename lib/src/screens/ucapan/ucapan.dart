@@ -11,12 +11,14 @@ class UcapanScreen extends StatelessWidget {
     this.onSend,
     this.conName,
     this.conMessage,
+    required this.onWillPop,
   }) : super(key: key);
 
   final List<List<String>>? ucapan;
   final void Function()? onSend;
   final TextEditingController? conName;
   final TextEditingController? conMessage;
+  final Future<bool> Function() onWillPop;
 
   @override
   Widget build(BuildContext context) {
@@ -25,132 +27,135 @@ class UcapanScreen extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          constraints: const BoxConstraints(maxWidth: 480),
-          width: bgWidth,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: const AssetImage('assets/img/img-side-by-side.jpg'),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.75),
-                BlendMode.dstATop,
+      child: WillPopScope(
+        onWillPop: onWillPop,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Container(
+            constraints: const BoxConstraints(maxWidth: 480),
+            width: bgWidth,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: const AssetImage('assets/img/img-side-by-side.jpg'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.75),
+                  BlendMode.dstATop,
+                ),
               ),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-                  child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
-                    reverse: true,
-                    itemCount: ucapan?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      var item = ucapan?[index];
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+                      reverse: true,
+                      itemCount: ucapan?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        var item = ucapan?[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                          width: width > 480 ? 480 - 64 : width,
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple.withOpacity(0.75),
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            width: width > 480 ? 480 - 64 : width,
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple.withOpacity(0.75),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item?[0] ?? "",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  item?[1] ?? "",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: AssetImage('assets/img/logo-bg-with-spark.jpg'),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.white.withOpacity(0.5),
+                        BlendMode.dstATop,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Tulis ucapanmu di sini",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "DancingScript",
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item?[0] ?? "",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                item?[1] ?? "",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
+                          isDense: true,
+                          labelText: 'Nama',
+                          hintText: "Isikan Nama Anda",
                         ),
-                      );
-                    },
+                        controller: conName,
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        minLines: 3,
+                        maxLines: 3,
+                        textAlignVertical: TextAlignVertical.top,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(),
+                          ),
+                          isDense: true,
+                          labelText: 'Ucapan',
+                          hintText: "Isikan Ucapan Anda",
+                        ),
+                        controller: conMessage,
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: onSend,
+                        child: Text("Kirim"),
+                      )
+                    ],
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage('assets/img/logo-bg-with-spark.jpg'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.5),
-                      BlendMode.dstATop,
-                    ),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Tulis ucapanmu di sini",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "DancingScript",
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(),
-                        ),
-                        isDense: true,
-                        labelText: 'Nama',
-                        hintText: "Isikan Nama Anda",
-                      ),
-                      controller: conName,
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      minLines: 3,
-                      maxLines: 3,
-                      textAlignVertical: TextAlignVertical.top,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(),
-                        ),
-                        isDense: true,
-                        labelText: 'Ucapan',
-                        hintText: "Isikan Ucapan Anda",
-                      ),
-                      controller: conMessage,
-                    ),
-                    const SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: onSend,
-                      child: Text("Kirim"),
-                    )
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

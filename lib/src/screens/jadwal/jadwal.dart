@@ -2,8 +2,8 @@
 import 'dart:math' as math;
 import 'package:wedding_invitation/src/views.dart';
 
-class Jadwal1Screen extends StatelessWidget {
-  const Jadwal1Screen({Key? key, required this.onWillPop}) : super(key: key);
+class JadwalScreen extends StatelessWidget {
+  const JadwalScreen({Key? key, required this.onWillPop}) : super(key: key);
 
   final Future<bool> Function() onWillPop;
 
