@@ -92,6 +92,24 @@ class JadwalScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // SCROLL
+
+            Positioned(
+              bottom: 8,
+              left: 16,
+              child: Spring.slide(
+                animDuration: const Duration(milliseconds: 3000),
+                delay: const Duration(milliseconds: 1000),
+                slideType: SlideType.slide_in_bottom,
+                child: Column(
+                  children: const [
+                    Text("scroll", style: TextStyle(fontSize: 12)),
+                    Icon(UniconsLine.angle_double_down, size: 24),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

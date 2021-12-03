@@ -70,7 +70,7 @@ class InfoMempelaiScreen extends StatelessWidget {
             ),
             Positioned(
               bottom: 8,
-              right: 16,
+              left: 16,
               child: Spring.slide(
                 animDuration: const Duration(milliseconds: 3000),
                 delay: const Duration(milliseconds: 1000),

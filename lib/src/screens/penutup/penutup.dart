@@ -22,6 +22,9 @@ class PenutupScreen extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 480),
               width: bgWidth,
             ),
+
+            //
+
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 100, 32, 100),
               child: Center(
@@ -48,6 +51,22 @@ class PenutupScreen extends StatelessWidget {
                       )
                     ],
                   ),
+                ),
+              ),
+            ),
+
+            // SCROLL
+            Positioned(
+              bottom: 8,
+              left: 16,
+              child: Spring.slide(
+                animDuration: const Duration(milliseconds: 3000),
+                slideType: SlideType.slide_in_bottom,
+                child: Column(
+                  children: const [
+                    Text("scroll", style: TextStyle(fontSize: 12)),
+                    Icon(UniconsLine.angle_double_down, size: 24),
+                  ],
                 ),
               ),
             ),
