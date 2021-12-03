@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Wedding Invitation',
-      theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.blue),
+      theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.deepPurple),
       home: Column(
         children: [
           Expanded(

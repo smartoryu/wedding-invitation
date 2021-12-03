@@ -1,18 +1,16 @@
 import 'package:wedding_invitation/src/views.dart';
 
-class GiftScreen extends StatelessWidget {
-  const GiftScreen({
-    Key? key,
-    this.onTap,
-  }) : super(key: key);
-
-  final void Function()? onTap;
+class PenutupScreen extends StatelessWidget {
+  const PenutupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("GIFT")),
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text("PENUTUP"),
+        backgroundColor: Colors.amber,
+      ),
+      backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 480),
@@ -26,11 +24,6 @@ class GiftScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: onTap,
-        tooltip: 'Back to Home',
-        child: const Icon(Icons.arrow_upward),
       ),
     );
   }

@@ -13,7 +13,7 @@ class InfoMempelaiScreen extends StatelessWidget {
       body: Stack(
         // alignment: Alignment.center,
         children: [
-          const Background(),
+          // const Background(),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -21,7 +21,7 @@ class InfoMempelaiScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 Spring.fadeIn(
                   animDuration: const Duration(milliseconds: 1000),
-                  delay: const Duration(milliseconds: 2000),
+                  delay: const Duration(milliseconds: 1000),
                   child: Container(
                     width:
                         width > 450 ? 480 : MediaQuery.of(context).size.width,
