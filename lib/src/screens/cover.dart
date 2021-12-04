@@ -11,7 +11,8 @@ class CoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink.withOpacity(0.005),
+      // backgroundColor: Colors.pink.withOpacity(0.005),
+      backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 100.0),
         child: Center(
@@ -30,7 +31,7 @@ class CoverScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
                   ),
                   child: Container(
                     height: 75,

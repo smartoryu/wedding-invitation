@@ -1,11 +1,20 @@
 // ignore_for_file: unnecessary_const
 
+import 'package:wedding_invitation/src/screens/components/audio_toggle.dart';
+import 'package:wedding_invitation/src/screens/components/scroll_logo.dart';
 import 'package:wedding_invitation/src/views.dart';
 
 class PenutupScreen extends StatelessWidget {
-  const PenutupScreen({Key? key, required this.onWillPop}) : super(key: key);
-
   final Future<bool> Function() onWillPop;
+  final bool isPlaying;
+  final void Function() toggleAudio;
+
+  const PenutupScreen({
+    Key? key,
+    required this.onWillPop,
+    required this.isPlaying,
+    required this.toggleAudio,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +27,6 @@ class PenutupScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Container(
-              constraints: const BoxConstraints(maxWidth: 480),
-              width: bgWidth,
-            ),
-
-            //
-
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 100, 32, 100),
               child: Center(
@@ -55,21 +57,16 @@ class PenutupScreen extends StatelessWidget {
               ),
             ),
 
-            // SCROLL
-            Positioned(
+            // AUDIO TOGGLE
+            AudioToggle(
               bottom: 8,
-              left: 16,
-              child: Spring.slide(
-                animDuration: const Duration(milliseconds: 3000),
-                slideType: SlideType.slide_in_bottom,
-                child: Column(
-                  children: const [
-                    Text("scroll", style: TextStyle(fontSize: 12)),
-                    Icon(UniconsLine.angle_double_down, size: 24),
-                  ],
-                ),
-              ),
+              right: 16,
+              toggleAudio: toggleAudio,
+              isPlaying: isPlaying,
             ),
+
+            // SCROLL
+            const ScrollLogo(bottom: 8, left: 16),
           ],
         ),
       ),

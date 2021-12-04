@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:wedding_invitation/src/views.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +9,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late AudioPlayer player;
+  bool isPlaying = false;
+
   final PageController _pageController = PageController();
   double currentPage = 0;
 
@@ -53,9 +57,28 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> startAudio() async {
+    player = AudioPlayer();
+    await player.setAsset('assets/audio/bgm.mp3');
+    await player.setLoopMode(LoopMode.one);
+    player.play();
+    setState(() => isPlaying = true);
+  }
+
+  void toggleAudio() {
+    if (isPlaying) {
+      player.pause();
+      setState(() => isPlaying = false);
+    } else {
+      player.play();
+      setState(() => isPlaying = true);
+    }
+  }
+
   @override
   void initState() {
     resetInput();
+    startAudio();
 
     conName.addListener(() => setName(conName.text));
     conMessage.addListener(() => setMsg(conMessage.text));
@@ -63,6 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() => currentPage = _pageController.page ?? 0);
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   @override
@@ -90,8 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    debugPrint("currentPage $currentPage");
-
     IconData? findFABIcon() {
       if (currentPage > 2.5 && currentPage <= 3.5) {
         return Icons.margin;
@@ -107,6 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     bool isFABOnBottom() => currentPage > 2.5 && currentPage <= 3.5;
+
+    // debugPrint("currentPage $currentPage");
+    debugPrint("isPlaying $isPlaying");
+    debugPrint("audioSource ${player.audioSource}");
 
     return Column(
       children: [
@@ -127,13 +158,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
+                  //
+
                   Container(
                     constraints: const BoxConstraints(maxWidth: 480),
                     width: bgWidth,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: const AssetImage(
-                            'assets/img/img-see-each-other.jpg'),
+                          'assets/img/img-see-each-other.jpg',
+                        ),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                           Colors.white.withOpacity(0.75),
@@ -142,13 +177,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
+                  //
+
                   PageView(
                     controller: _pageController,
                     scrollDirection: Axis.vertical,
                     children: [
-                      InfoMempelaiScreen(onWillPop: onWillPop),
-                      JadwalScreen(onWillPop: onWillPop),
-                      PenutupScreen(onWillPop: onWillPop),
+                      InfoMempelaiScreen(
+                        onWillPop: onWillPop,
+                        isPlaying: isPlaying,
+                        toggleAudio: toggleAudio,
+                      ),
+                      JadwalScreen(
+                        onWillPop: onWillPop,
+                        isPlaying: isPlaying,
+                        toggleAudio: toggleAudio,
+                      ),
+                      PenutupScreen(
+                        onWillPop: onWillPop,
+                        isPlaying: isPlaying,
+                        toggleAudio: toggleAudio,
+                      ),
                       UcapanScreen(
                         ucapan: ucapan.reversed.toList(),
                         conName: conName,
@@ -166,115 +216,124 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              floatingActionButtonLocation: isFABOnBottom()
-                  ? FloatingActionButtonLocation.endFloat
-                  : FloatingActionButtonLocation.endTop,
-              floatingActionButton: SpeedDial(
-                // animatedIcon: AnimatedIcons.menu_close,
-                // animatedIconTheme: IconThemeData(size: 22.0),
-                // / This is ignored if animatedIcon is non null
-                // child: Text("open"),
-                // activeChild: Text("close"),
-                icon: findFABIcon(),
-                activeIcon: Icons.close,
-                spacing: 3,
-                // openCloseDial: isDialOpen,
-                // childPadding: const EdgeInsets.all(5),
-                spaceBetweenChildren: 4,
-                // dialRoot: (ctx, open, toggleChildren) {
-                //   return ElevatedButton(
-                //     onPressed: toggleChildren,
-                //     style: ElevatedButton.styleFrom(
-                //       primary: Colors.blue[900],
-                //       padding: const EdgeInsets.symmetric(
-                //         horizontal: 22,
-                //         vertical: 18,
-                //       ),
-                //     ),
-                //     child: const Text(
-                //       "Custom Dial Root",
-                //       style: TextStyle(fontSize: 17),
-                //     ),
-                //   );
-                // },
+              // floatingActionButtonLocation: isFABOnBottom()
+              //     ? FloatingActionButtonLocation.endFloat
+              //     : FloatingActionButtonLocation.endTop,
+              // floatingActionButton: Padding(
+              //   padding: const EdgeInsets.only(top: 8.0),
+              //   child: SpeedDial(
+              //     icon: findFABIcon(),
+              //     activeIcon: Icons.close,
+              //     spacing: 3,
+              //     spaceBetweenChildren: 4,
+              //     // dialRoot: (ctx, open, toggleChildren) {
+              //     //   return ElevatedButton(
+              //     //     onPressed: toggleChildren,
+              //     //     style: ElevatedButton.styleFrom(
+              //     //       shape: const CircleBorder(),
+              //     //       primary: Colors.blue[900],
+              //     //       padding: const EdgeInsets.symmetric(
+              //     //         horizontal: 22,
+              //     //         vertical: 18,
+              //     //       ),
+              //     //     ),
+              //     //     child: const Text(
+              //     //       "Custom Dial Root",
+              //     //       style: TextStyle(fontSize: 17),
+              //     //     ),
+              //     //   );
+              //     // },
 
-                buttonSize: 56.0,
-                // it's the SpeedDial size which defaults to 56 itself
-                // iconTheme: IconThemeData(size: 22),
-                // label: const Text("Open"), // The label of the main button.
-                /// The active label of the main button, Defaults to label if not specified.
-                // activeLabel: const Text("Close"),
+              //     buttonSize: 56.0,
+              //     // it's the SpeedDial size which defaults to 56 itself
+              //     // iconTheme: IconThemeData(size: 22),
+              //     // label: const Text("Open"), // The label of the main button.
+              //     /// The active label of the main button, Defaults to label if not specified.
+              //     // activeLabel: const Text("Close"),
 
-                /// Transition Builder between label and activeLabel, defaults to FadeTransition.
-                // labelTransitionBuilder: (widget, animation) => ScaleTransition(scale: animation,child: widget),
-                /// The below button size defaults to 56 itself, its the SpeedDial childrens size
-                childrenButtonSize: 56.0,
-                visible: true,
-                direction: isFABOnBottom()
-                    ? SpeedDialDirection.up
-                    : SpeedDialDirection.down,
-                switchLabelPosition: false,
+              //     /// Transition Builder between label and activeLabel, defaults to FadeTransition.
+              //     // labelTransitionBuilder: (widget, animation) => ScaleTransition(scale: animation,child: widget),
+              //     /// The below button size defaults to 56 itself, its the SpeedDial childrens size
+              //     childrenButtonSize: 56.0,
+              //     visible: true,
+              //     direction: isFABOnBottom()
+              //         ? SpeedDialDirection.up
+              //         : SpeedDialDirection.down,
+              //     switchLabelPosition: false,
 
-                /// If true user is forced to close dial manually
-                // closeManually: closeManually,
+              //     /// If true user is forced to close dial manually
+              //     // closeManually: closeManually,
 
-                /// If false, backgroundOverlay will not be rendered.
-                renderOverlay: false,
-                overlayColor: Colors.black,
-                // overlayOpacity: 0.5,
-                // onOpen: () => debugPrint('OPENING DIAL'),
-                // onClose: () => debugPrint('DIAL CLOSED'),
-                useRotationAnimation: true,
-                // tooltip: 'Open Speed Dial',
-                heroTag: 'speed-dial-hero-tag',
-                // foregroundColor: Colors.black,
-                // backgroundColor: Colors.white,
-                // activeForegroundColor: Colors.red,
-                // activeBackgroundColor: Colors.blue,
-                elevation: 8.0,
-                isOpenOnStart: false,
-                animationSpeed: 200,
-                shape: const StadiumBorder(),
-                // shape: customDialRoot
-                //     ? const RoundedRectangleBorder()
-                //     : const StadiumBorder(),
-                // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                children: [
-                  SpeedDialChild(
-                    child: const Icon(Icons.accessibility),
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    label: 'Mempelai',
-                    onTap: () => changePage(0),
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(Icons.pin_drop),
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    label: 'Jadwal & Lokasi',
-                    onTap: () => changePage(1),
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(Icons.brush),
-                    backgroundColor: Colors.deepOrange,
-                    foregroundColor: Colors.white,
-                    label: 'Penutup',
-                    onTap: () => changePage(2),
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(Icons.margin),
-                    backgroundColor: Colors.indigo,
-                    foregroundColor: Colors.white,
-                    label: 'Ucapan',
-                    visible: true,
-                    onTap: () => changePage(3),
-                  ),
-                ],
-              ),
+              //     /// If false, backgroundOverlay will not be rendered.
+              //     renderOverlay: false,
+              //     overlayColor: Colors.black,
+              //     // overlayOpacity: 0.5,
+              //     // onOpen: () => debugPrint('OPENING DIAL'),
+              //     // onClose: () => debugPrint('DIAL CLOSED'),
+              //     useRotationAnimation: true,
+              //     // tooltip: 'Open Speed Dial',
+              //     heroTag: 'speed-dial-hero-tag',
+              //     foregroundColor: Colors.deepPurple[100],
+              //     backgroundColor: Colors.deepPurple[300],
+              //     activeForegroundColor: Colors.white,
+              //     activeBackgroundColor: Colors.deepPurple[400],
+              //     // elevation: 8.0,
+              //     // backgroundColor: Colors.white.withOpacity(0.25),
+              //     elevation: 0,
+              //     isOpenOnStart: false,
+              //     animationSpeed: 200,
+              //     shape: const StadiumBorder(),
+              //     // shape: customDialRoot
+              //     //     ? const RoundedRectangleBorder()
+              //     //     : const StadiumBorder(),
+              //     // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              //     children: [
+              //       SpeedDialChild(
+              //         child: const Icon(Icons.accessibility),
+              //         backgroundColor: Colors.red,
+              //         foregroundColor: Colors.white,
+              //         label: 'Mempelai',
+              //         onTap: () => changePage(0),
+              //       ),
+              //       SpeedDialChild(
+              //         child: const Icon(Icons.pin_drop),
+              //         backgroundColor: Colors.red,
+              //         foregroundColor: Colors.white,
+              //         label: 'Jadwal & Lokasi',
+              //         onTap: () => changePage(1),
+              //       ),
+              //       speedDialChild(
+              //         'Penutup',
+              //         const Icon(Icons.brush),
+              //         () => changePage(2),
+              //       ),
+              //       speedDialChild(
+              //         'Ucapan',
+              //         const Icon(Icons.margin),
+              //         () => changePage(3),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  SpeedDialChild speedDialChild(
+    String label,
+    Widget child,
+    void Function() changePage,
+  ) {
+    return SpeedDialChild(
+      child: child,
+      backgroundColor: Colors.deepPurple[300],
+      foregroundColor: Colors.deepPurple[100],
+      label: label,
+      visible: true,
+      onTap: changePage,
     );
   }
 }

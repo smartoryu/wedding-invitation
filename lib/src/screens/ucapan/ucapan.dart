@@ -79,7 +79,7 @@ class UcapanScreen extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                                 width: width > 480 ? 480 - 64 : width,
                                 decoration: BoxDecoration(
-                                  color: Colors.deepPurple.withOpacity(0.75),
+                                  color: Colors.blueGrey.withOpacity(0.75),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(

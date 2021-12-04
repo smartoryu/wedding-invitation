@@ -10,24 +10,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Wedding Invitation',
-      theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.deepPurple),
-      home: Column(
-        children: [
-          Expanded(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 480),
-              width: 480,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/img/img-bg-pink-purple.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: const CoverScreen(),
-            ),
-          ),
-        ],
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        primarySwatch: Colors.deepPurple,
       ),
+      initialRoute: '/tes-route',
+      routes: {
+        // '/': (context) => HomeView(),
+        '/putri-kuntep': (context) => Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 480),
+                    width: 480,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/img/img-bg-pink-purple.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: const CoverScreen(),
+                  ),
+                ),
+              ],
+            ),
+      },
     );
   }
 }

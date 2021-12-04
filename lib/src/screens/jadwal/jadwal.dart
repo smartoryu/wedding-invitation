@@ -1,11 +1,22 @@
-// ignore_for_file: prefer_const_constructors
-import 'dart:math' as math;
+import 'package:wedding_invitation/src/screens/components/audio_toggle.dart';
+import 'package:wedding_invitation/src/screens/components/scroll_logo.dart';
 import 'package:wedding_invitation/src/views.dart';
 
-class JadwalScreen extends StatelessWidget {
-  const JadwalScreen({Key? key, required this.onWillPop}) : super(key: key);
+import 'flower_bottom.dart';
+import 'flower_top.dart';
+import 'jadwal_pemberkatan.dart';
 
+class JadwalScreen extends StatelessWidget {
   final Future<bool> Function() onWillPop;
+  final bool isPlaying;
+  final void Function() toggleAudio;
+
+  const JadwalScreen({
+    Key? key,
+    required this.onWillPop,
+    required this.isPlaying,
+    required this.toggleAudio,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +36,7 @@ class JadwalScreen extends StatelessWidget {
               width: bgWidth,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/logo-bg-with-spark.jpg'),
+                  image: const AssetImage('assets/img/logo-bg-with-spark.jpg'),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                     Colors.white.withOpacity(0.75),
@@ -35,24 +46,8 @@ class JadwalScreen extends StatelessWidget {
               ),
             ),
 
-            // BOTTOM FLOWER
-            Positioned(
-              bottom: -10,
-              right: 0,
-              child: Spring.slide(
-                animDuration: const Duration(milliseconds: 2000),
-                delay: const Duration(milliseconds: 0),
-                slideType: SlideType.slide_in_bottom,
-                child: Transform.rotate(
-                  angle: math.pi / 180,
-                  child: Image.asset(
-                    'assets/img/logo-purple-flower-bottom.png',
-                    fit: BoxFit.contain,
-                    width: 125,
-                  ),
-                ),
-              ),
-            ),
+            // FLOWER BOTTOM
+            const FlowerBottom(),
 
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,76 +62,27 @@ class JadwalScreen extends StatelessWidget {
                         color: Colors.white.withOpacity(0.75),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(child: Text("BOTTOM")),
+                      child: const Center(child: Text("BOTTOM")),
                     ),
                   ),
                 ),
               ],
             ),
 
-            // TOP FLOWER
-            Positioned(
-              top: -15,
-              left: -20,
-              child: Spring.slide(
-                animDuration: const Duration(milliseconds: 2000),
-                delay: const Duration(milliseconds: 50),
-                slideType: SlideType.slide_in_top,
-                child: Transform.rotate(
-                  angle: math.pi / 180 * -20,
-                  child: Image.asset(
-                    'assets/img/logo-purple-flower-top.png',
-                    fit: BoxFit.contain,
-                    width: 125,
-                  ),
-                ),
-              ),
+            // FLOWER TOP
+            const FlowerTop(),
+
+            // AUDIO TOGGLE
+            AudioToggle(
+              bottom: 8,
+              right: 16,
+              toggleAudio: toggleAudio,
+              isPlaying: isPlaying,
             ),
 
             // SCROLL
-
-            Positioned(
-              bottom: 8,
-              left: 16,
-              child: Spring.slide(
-                animDuration: const Duration(milliseconds: 3000),
-                delay: const Duration(milliseconds: 1000),
-                slideType: SlideType.slide_in_bottom,
-                child: Column(
-                  children: const [
-                    Text("scroll", style: TextStyle(fontSize: 12)),
-                    Icon(UniconsLine.angle_double_down, size: 24),
-                  ],
-                ),
-              ),
-            ),
+            const ScrollLogo(bottom: 8, left: 16),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class JadwalPemberkatan extends StatelessWidget {
-  const JadwalPemberkatan({
-    Key? key,
-    required this.height,
-  }) : super(key: key);
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height * 0.5,
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.75),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Center(child: Text("TOP")),
         ),
       ),
     );
