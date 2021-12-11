@@ -42,7 +42,7 @@ class AppModule extends Module {
 
             return Title(
               color: Colors.pink.shade50,
-              title: "Undang Nikah",
+              title: "Putri & Kuntep",
               child: Column(
                 children: [
                   Expanded(
