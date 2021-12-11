@@ -34,9 +34,9 @@ class AppModule extends Module {
         ChildRoute("/", child: (context, args) {
           return const Center(child: Text("Home"));
         }),
-        RedirectRoute('/', to: '/putri-kuntep'),
+        RedirectRoute('/', to: '/putri-dan-kuntep'),
         ChildRoute(
-          '/putri-kuntep',
+          '/putri-dan-kuntep',
           child: (context, args) {
             String guest = Uri.base.queryParameters['guest'] ?? '-';
 
