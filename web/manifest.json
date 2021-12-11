@@ -1,11 +1,11 @@
 {
-    "name": "wedding_invitation",
-    "short_name": "wedding_invitation",
+    "name": "Putri & Kuntep",
+    "short_name": "Putri & Kuntep",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "18 Desember 2021",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
