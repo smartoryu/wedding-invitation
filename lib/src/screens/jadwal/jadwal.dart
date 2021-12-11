@@ -5,6 +5,7 @@ import 'package:wedding_invitation/src/views.dart';
 import 'flower_bottom.dart';
 import 'flower_top.dart';
 import 'jadwal_pemberkatan.dart';
+import 'jadwal_resepsi.dart';
 
 class JadwalScreen extends StatelessWidget {
   final Future<bool> Function() onWillPop;
@@ -53,19 +54,7 @@ class JadwalScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 JadwalPemberkatan(height: height),
-                SizedBox(
-                  height: height * 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.75),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Center(child: Text("BOTTOM")),
-                    ),
-                  ),
-                ),
+                JadwalResepsi(height: height),
               ],
             ),
 

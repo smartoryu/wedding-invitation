@@ -34,13 +34,22 @@ class AppModule extends Module {
                   child: Container(
                     constraints: const BoxConstraints(maxWidth: 480),
                     width: 480,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/img/img-bg-pink-purple.jpg'),
+                        image: const AssetImage('assets/img/img-bg-leaf.jpg'),
                         fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          Colors.grey.withOpacity(0.75),
+                          BlendMode.dstATop,
+                        ),
                       ),
                     ),
                     child: CoverScreen(guest: guest),
+                    // child: JadwalScreen(
+                    //   onWillPop: () async => true,
+                    //   isPlaying: true,
+                    //   toggleAudio: () {},
+                    // ),
                   ),
                 ),
               ],

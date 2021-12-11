@@ -30,7 +30,7 @@ class CoverScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    InviteeName(guest: guest),
+                    const InviteeName(guest: 'Keluarga dan Saudara\nPutri dan Kuntep'),
                     const SizedBox(height: 20),
                     ButtonBukaUndangan(
                       onTap: () {
@@ -63,7 +63,7 @@ class InviteeName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        minWidth: 100,
+        minWidth: 200,
         maxWidth: 300,
         minHeight: 75,
       ),

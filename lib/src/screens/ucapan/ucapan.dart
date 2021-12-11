@@ -2,23 +2,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:wedding_invitation/src/screens/components/audio_toggle.dart';
 import 'package:wedding_invitation/src/views.dart';
 
 class UcapanScreen extends StatelessWidget {
   const UcapanScreen({
     Key? key,
+    required this.onWillPop,
+    required this.isPlaying,
+    required this.toggleAudio,
     this.ucapan = const [],
     this.onSend,
     this.conName,
     this.conMessage,
-    required this.onWillPop,
   }) : super(key: key);
 
+  final Future<bool> Function() onWillPop;
+  final bool isPlaying;
+  final void Function() toggleAudio;
   final List<List<String>>? ucapan;
   final void Function()? onSend;
   final TextEditingController? conName;
   final TextEditingController? conMessage;
-  final Future<bool> Function() onWillPop;
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +54,6 @@ class UcapanScreen extends StatelessWidget {
               Container(
                 constraints: const BoxConstraints(maxWidth: 480),
                 width: bgWidth,
-                // decoration: BoxDecoration(
-                //   image: DecorationImage(
-                //     image: const AssetImage('assets/img/img-side-by-side.jpg'),
-                //     fit: BoxFit.cover,
-                //     colorFilter: ColorFilter.mode(
-                //       Colors.white.withOpacity(0.75),
-                //       BlendMode.dstATop,
-                //     ),
-                //   ),
-                // ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -172,6 +167,16 @@ class UcapanScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+
+              //
+
+              // AUDIO TOGGLE
+              AudioToggle(
+                bottom: 8,
+                right: 16,
+                toggleAudio: toggleAudio,
+                isPlaying: isPlaying,
               ),
             ],
           ),

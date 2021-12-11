@@ -1,5 +1,4 @@
 export 'package:flutter/material.dart';
-export 'package:flutter_speed_dial/flutter_speed_dial.dart';
 export 'package:just_audio/just_audio.dart';
 export 'package:spring/spring.dart';
 export 'package:unicons/unicons.dart';

@@ -1,8 +1,8 @@
 import 'package:wedding_invitation/src/screens/components/button_open_map.dart';
 import 'package:wedding_invitation/src/views.dart';
 
-class JadwalPemberkatan extends StatelessWidget {
-  const JadwalPemberkatan({
+class JadwalResepsi extends StatelessWidget {
+  const JadwalResepsi({
     Key? key,
     required this.height,
   }) : super(key: key);
@@ -25,7 +25,7 @@ class JadwalPemberkatan extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Text(
-                  "Pemberkatan Perkawinan",
+                  "Resepsi",
                   style: TextStyle(
                     fontFamily: 'DancingScript',
                     fontSize: 32,
@@ -42,7 +42,7 @@ class JadwalPemberkatan extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: const [
                           Text("Sabtu"),
-                          Text("08.00 - 09.00 WIB"),
+                          Text("11.00 - 14.00 WIB"),
                         ],
                       ),
                     ),
@@ -67,7 +67,8 @@ class JadwalPemberkatan extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text("Gereja St. Antonius Padua, Kendal"),
+                    Text("Hotel Sae Inn"),
+                    Text("Jalan Raya Soekarno Hatta 338, Kendal"),
                     SizedBox(height: 4),
                     ButtonOpenMap(),
                   ],

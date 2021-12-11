@@ -34,9 +34,9 @@ class InfoMempelaiContent extends StatelessWidget {
                     Column(
                       children: const [
                         TextTitle('Maria Nirmala Putri'),
-                        TextContent('Putri dari:', isBold: true),
-                        TextContent('Bapak __________'),
-                        TextContent('Ibu __________'),
+                        TextContent('Putri Pertama dari:', isBold: true),
+                        TextContent('Bapak Anton Tri Raharjo'),
+                        TextContent('Ibu Eustasia Christine Martati'),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -45,9 +45,9 @@ class InfoMempelaiContent extends StatelessWidget {
                     Column(
                       children: const [
                         TextTitle('Kristian Kuntep Hagatang'),
-                        TextContent('Putra dari:', isBold: true),
-                        TextContent('Bapak __________'),
-                        TextContent('Ibu __________'),
+                        TextContent('Putra Keempat dari:', isBold: true),
+                        TextContent('Bapak Djuni Re Tarawa (\u2020)'),
+                        TextContent('Ibu Anita Rudji'),
                       ],
                     ),
                   ],
