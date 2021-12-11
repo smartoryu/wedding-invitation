@@ -34,7 +34,7 @@ class PenutupScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Terima kasih untuk segala cinta dan dukungan yang telah diberikan kepada kami. Kami mohon doa restu dari tempat Bapak Ibu di manapun berada.\n\nTurut berbahagia\nKeluarga Bapak Anton Tri Raharjo\nKeluarga Bapak Djuni Re Tarawa (\u2020)',
+                        'Terima kasih untuk segala cinta dan dukungan yang telah diberikan kepada kami. Kami mohon doa restu dari tempat Bapak Ibu di manapun berada.\n\nTurut berbahagia\nKlg Bp. Anton Tri Raharjo\nKlg. Bp. Djuni Re Tarawa (\u2020)',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
