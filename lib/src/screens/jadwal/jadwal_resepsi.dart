@@ -81,7 +81,7 @@ class JadwalResepsi extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        ButtonOpenYT("https://youtu.be/upIZ6qQ8n8Y"),
+                        ButtonOpenIG("https://instagram.com/kunteptarawa"),
                         SizedBox(width: 8),
                         ButtonOpenMap("https://goo.gl/maps/BjYPuCHFjwzNFnps9"),
                       ],
