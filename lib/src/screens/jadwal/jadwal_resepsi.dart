@@ -63,8 +63,8 @@ class JadwalResepsi extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          TextStyled("Desember"),
-                          TextStyled("2021"),
+                          TextStyled("Desember", textAlign: TextAlign.start),
+                          TextStyled("2021", textAlign: TextAlign.start),
                         ],
                       ),
                     ),
@@ -98,14 +98,21 @@ class JadwalResepsi extends StatelessWidget {
 }
 
 class TextStyled extends StatelessWidget {
-  const TextStyled(this.child, {Key? key}) : super(key: key);
+  const TextStyled(
+    this.child, {
+    Key? key,
+    this.textAlign = TextAlign.end,
+  }) : super(key: key);
+
   final String child;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       child,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+      textAlign: textAlign,
+      style: const TextStyle(fontWeight: FontWeight.w600),
     );
   }
 }
