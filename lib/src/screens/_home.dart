@@ -111,9 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    debugPrint("isPlaying $isPlaying");
-    debugPrint("audioSource ${player.audioSource}");
-
     return Column(
       children: [
         Expanded(
@@ -171,8 +168,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         conMessage: conMessage,
                         onSend: inputName == '' || inputMsg == ''
                             ? null
-                            : () {
-                                addUcapan(conName.text, conMessage.text);
+                            : () async {
+                                // addUcapan(conName.text, conMessage.text);
+                                await DatabaseService()
+                                    .greetings
+                                    .create(inputName, inputMsg);
+
                                 resetInput();
                                 FocusScope.of(context).unfocus();
                               },

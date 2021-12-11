@@ -1,9 +1,16 @@
 // ignore_for_file: unnecessary_const, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:wedding_invitation/src/screens/components/audio_toggle.dart';
 import 'package:wedding_invitation/src/views.dart';
+
+import '__model.dart';
+import '_background.dart';
+import '_input.dart';
 
 class UcapanScreen extends StatelessWidget {
   const UcapanScreen({
@@ -30,6 +37,7 @@ class UcapanScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double bgWidth = width > 480 ? 480 : width;
+    // width: width > 480 ? 480 - 64 : width,
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -39,17 +47,7 @@ class UcapanScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Stack(
             children: [
-              Positioned(
-                bottom: 150,
-                child: Image.asset(
-                  'assets/img/img-side-by-side.jpg',
-                  width: bgWidth,
-                  height: height,
-                  fit: BoxFit.cover,
-                ),
-              ),
-
-              //
+              UcapanBackground(bgWidth: bgWidth, height: height),
 
               Container(
                 constraints: const BoxConstraints(maxWidth: 480),
@@ -60,116 +58,17 @@ class UcapanScreen extends StatelessWidget {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
-                          reverse: true,
-                          itemCount: ucapan?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            var item = ucapan?[index];
-
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Container(
-                                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                                width: width > 480 ? 480 - 64 : width,
-                                decoration: BoxDecoration(
-                                  color: Colors.blueGrey.withOpacity(0.75),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item?[0] ?? "",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      item?[1] ?? "",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        child: greetingList(bgWidth),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image:
-                              AssetImage('assets/img/logo-bg-with-spark.jpg'),
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                            Colors.white.withOpacity(0.5),
-                            BlendMode.dstATop,
-                          ),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Tulis ucapanmu di sini",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "DancingScript",
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(),
-                              ),
-                              isDense: true,
-                              labelText: 'Nama',
-                              hintText: "Isikan Nama Anda",
-                            ),
-                            controller: conName,
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            minLines: 3,
-                            maxLines: 3,
-                            textAlignVertical: TextAlignVertical.top,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(),
-                              ),
-                              isDense: true,
-                              labelText: 'Ucapan',
-                              hintText: "Isikan Ucapan Anda",
-                            ),
-                            controller: conMessage,
-                          ),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: onSend,
-                            child: Text("Kirim"),
-                          )
-                        ],
-                      ),
+                    UcapanInput(
+                      conName: conName,
+                      conMessage: conMessage,
+                      onSend: onSend,
                     ),
                   ],
                 ),
               ),
-
-              //
 
               // AUDIO TOGGLE
               AudioToggle(
@@ -184,6 +83,71 @@ class UcapanScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-// assets/img/img-side-by-side.jpg
+  StreamBuilder<QuerySnapshot<Object?>> greetingList(double width) {
+    return StreamBuilder<QuerySnapshot<Object?>>(
+      stream: DatabaseService().greetings.fetch,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          debugPrint(snapshot.error.toString());
+          return const Text("Network Error");
+        }
+
+        if (snapshot.hasData) {
+          List<UcapanModel> data = [];
+          for (var e in snapshot.data!.docs) {
+            var json = e.data();
+            var item = UcapanModel.fromJson(jsonDecode(jsonEncode(json)));
+            data.insert(0, item);
+          }
+
+          debugPrint("$data");
+
+          return ListView.separated(
+              reverse: true,
+              physics: BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                var item = data[index];
+
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Container(
+                    width: width,
+                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.withOpacity(0.75),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          item.message,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+}

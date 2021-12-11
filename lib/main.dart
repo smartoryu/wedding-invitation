@@ -1,8 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:wedding_invitation/src/views.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyA_CE4dO15QEWRMFlMC9ZhRqd4gkeBYCKM",
+      authDomain: "wedding-invitation-29b21.firebaseapp.com",
+      projectId: "wedding-invitation-29b21",
+      storageBucket: "wedding-invitation-29b21.appspot.com",
+      messagingSenderId: "83281215625",
+      appId: "1:83281215625:web:075af21cf9ff699acc4658",
+    ),
+  );
   configureApp();
 
   return runApp(

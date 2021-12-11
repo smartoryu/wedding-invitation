@@ -10,3 +10,5 @@ export 'screens/info_mempelai/info_mempelai.dart';
 export 'screens/jadwal/jadwal.dart';
 export 'screens/penutup/penutup.dart';
 export 'screens/quote/quote.dart';
+
+export "utils/_index.dart";
