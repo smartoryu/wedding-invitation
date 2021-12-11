@@ -28,31 +28,35 @@ class AppModule extends Module {
           child: (context, args) {
             String guest = Uri.base.queryParameters['guest'] ?? '-';
 
-            return Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 480),
-                    width: 480,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage('assets/img/img-bg-leaf.jpg'),
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                          Colors.grey.withOpacity(0.75),
-                          BlendMode.dstATop,
+            return Title(
+              color: Colors.pink.shade50,
+              title: "Undang Nikah",
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 480),
+                      width: 480,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: const AssetImage('assets/img/img-bg-leaf.jpg'),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                            Colors.grey.withOpacity(0.75),
+                            BlendMode.dstATop,
+                          ),
                         ),
                       ),
+                      child: CoverScreen(guest: guest),
+                      // child: JadwalScreen(
+                      //   onWillPop: () async => true,
+                      //   isPlaying: true,
+                      //   toggleAudio: () {},
+                      // ),
                     ),
-                    child: CoverScreen(guest: guest),
-                    // child: JadwalScreen(
-                    //   onWillPop: () async => true,
-                    //   isPlaying: true,
-                    //   toggleAudio: () {},
-                    // ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
@@ -76,7 +80,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Wedding Invitation',
+      title: 'Undang Nikah',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primarySwatch: Colors.deepPurple,

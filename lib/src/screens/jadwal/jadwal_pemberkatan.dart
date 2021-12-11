@@ -1,4 +1,4 @@
-import 'package:wedding_invitation/src/screens/components/button_open_map.dart';
+import 'package:wedding_invitation/src/screens/components/button_open.dart';
 import 'package:wedding_invitation/src/views.dart';
 
 class JadwalPemberkatan extends StatelessWidget {
@@ -29,6 +29,7 @@ class JadwalPemberkatan extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'DancingScript',
                     fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
@@ -41,22 +42,28 @@ class JadwalPemberkatan extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: const [
-                          Text("Sabtu"),
-                          Text("08.00 - 09.00 WIB"),
+                          TextStyled("Sabtu"),
+                          TextStyled("08.00 - 09.00 WIB"),
                         ],
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: Text("18", style: TextStyle(fontSize: 32)),
+                      padding: EdgeInsets.only(left: 8, right: 8),
+                      child: Text(
+                        "18",
+                        style: TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     Expanded(
                       flex: 1,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text("Desember"),
-                          Text("2021"),
+                          TextStyled("Desember"),
+                          TextStyled("2021"),
                         ],
                       ),
                     ),
@@ -66,10 +73,19 @@ class JadwalPemberkatan extends StatelessWidget {
                 //
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text("Gereja St. Antonius Padua, Kendal"),
-                    SizedBox(height: 4),
-                    ButtonOpenMap(),
+                  children: [
+                    const Text("Gereja St. Antonius Padua, Kendal"),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        ButtonOpenYT("https://youtu.be/upIZ6qQ8n8Y"),
+                        SizedBox(width: 8),
+                        ButtonOpenIG("https://instagram.com/kunteptarawa"),
+                        SizedBox(width: 8),
+                        ButtonOpenMap("https://goo.gl/maps/T7XpbZ3jkAorY9S1A"),
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -77,6 +93,19 @@ class JadwalPemberkatan extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class TextStyled extends StatelessWidget {
+  const TextStyled(this.child, {Key? key}) : super(key: key);
+  final String child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      child,
+      style: const TextStyle(fontWeight: FontWeight.bold),
     );
   }
 }
